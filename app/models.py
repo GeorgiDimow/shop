@@ -1,3 +1,5 @@
+from hashlib import md5
+
 from app import db, login
 from flask_login import UserMixin
 
@@ -32,6 +34,23 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String(140))
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('item.id'))
 
     def __repr__(self):
-        return '<Order {}>'.format(self.body)
+        return '<Order {}>'.format(self.comment)
+
+
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    wood = db.Column(db.String(64))
+    type = db.Column(db.String(64))
+    price = db.Column(db.Float)
+    in_stock = db.Column(db.Boolean)
+
+    def __repr__(self):
+        return '<Item {}>'.format(self.type)
+
+    def photo(self, size):
+        digest = md5(self.type.lower().encode('utf-8')).hexdigest()
+        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
+            digest, size)
