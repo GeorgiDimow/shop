@@ -3,14 +3,15 @@ from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, EditProfileForm
-from app.models import Client
+from app.models import Client, Item
 
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    items = Item.query
+    return render_template('index.html', title='Home', items=items)
 
 
 @app.route('/login', methods=['GET', 'POST'])

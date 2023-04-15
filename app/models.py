@@ -42,6 +42,7 @@ class Order(db.Model):
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64))
     wood = db.Column(db.String(64))
     type = db.Column(db.String(64))
     price = db.Column(db.Float)
@@ -50,7 +51,5 @@ class Item(db.Model):
     def __repr__(self):
         return '<Item {}>'.format(self.type)
 
-    def photo(self, size):
-        digest = md5(self.type.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(
-            digest, size)
+    def photo(self, name, type):
+        return f"F:/shop/item_images/{type}/{name.lower}"

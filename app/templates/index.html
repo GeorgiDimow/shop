@@ -2,5 +2,18 @@
 
 {% block content %}
     <h1>Hi, {{ current_user.username }}!</h1>
+    <h2>For the bedroom:</h2>
+    {% for item in items if item.type == 'bedroom' %}
+    <div><img src="{{ item.photo(item.name, item.type) }}" ></div>
+    <div><p>{{ item.name }}: {{ item.price }}lv. - {{ item.wood }}</p></div>
+    {% endfor %}
+    <h2>For the kitchen:</h2>
+    {% for item in items if item.type == 'kitchen' %}
+    <div><p>{{ item.name }}: {{ item.price }}lv. - {{ item.wood }}</p></div>
+    {% endfor %}
+    <h2>For the living room:</h2>
+    {% for item in items if item.type == 'living room' %}
+    <div><p>{{ item.name }}: {{ item.price }}lv. - {{ item.wood }}</p></div>
+    {% endfor %}
 {% endblock %}
 
