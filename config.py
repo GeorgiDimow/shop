@@ -1,5 +1,9 @@
 import os
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -15,3 +19,10 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['ined_et@abv.bg']
+
+    cloudinary.config(
+        cloud_name="dvozlwvz0",
+        api_key="511373944373463",
+        api_secret="eBbW2CxXu24yv3s6ArJu6qhPaQY",
+        secure=True
+    )

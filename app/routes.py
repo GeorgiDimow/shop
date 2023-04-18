@@ -7,11 +7,13 @@ from app.models import Client, Item
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     items = Item.query
-    return render_template('index.html', title='Home', items=items)
+    WIDTH = 250
+    HEIGHT = 200
+    return render_template('index.html', title='Home', items=items, width=WIDTH, height=HEIGHT)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -57,15 +59,6 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/client/<username>')
-@login_required
-def user(username):
-    client = Client.query.filter_by(username=username).first_or_404()
-
-
-    return render_template('client.html', user=client)
-
-
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -79,3 +72,18 @@ def edit_profile():
         form.username.data = current_user.username
     return render_template('edit_profile.html', title='Edit Profile',
                            form=form)
+
+
+@app.route('/client/<username>')
+@login_required
+def user(username):
+    client = Client.query.filter_by(username=username).first_or_404()
+
+    return render_template('client.html', user=client)
+
+
+@app.route('/product/<item_id>', methods=['GET', 'POST'])
+def product(item_id):
+    id = int(item_id)
+    item = db.session.query(Item).filter_by(id=id).first()
+    return render_template('product.html', item=item)

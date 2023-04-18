@@ -8,6 +8,12 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+
+
 app = Flask(__name__)
 app.config.from_object(Config)
 db = SQLAlchemy(app)

@@ -1,5 +1,7 @@
 from hashlib import md5
 
+from cloudinary import CloudinaryImage
+
 from app import db, login
 from flask_login import UserMixin
 
@@ -51,5 +53,5 @@ class Item(db.Model):
     def __repr__(self):
         return '<Item {}>'.format(self.type)
 
-    def photo(self, name, type):
-        return f"F:/shop/item_images/{type}/{name.lower}"
+    def photo(self, item, width, height):
+        return CloudinaryImage(f"{item.name}").build_url(width=width, height=height)
